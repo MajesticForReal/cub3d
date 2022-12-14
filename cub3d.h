@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeannecolmou <jeannecolmou@student.42.f    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 14:49:46 by jecolmou          #+#    #+#             */
-/*   Updated: 2022/12/09 20:44:17 by jeannecolmo      ###   ########.fr       */
+/*   Updated: 2022/12/14 16:53:21 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@
 
 typedef struct s_data		t_data;
 
+typedef struct s_imgdata
+{
+	void	*image;
+	int		*addr;
+	int		img_width;
+	int		img_height;
+	int		bpp;
+	int		size_line;
+	int		endian;
+}	t_imgdata;
+
 struct	s_data
 {
 	int	file;
@@ -35,7 +46,10 @@ struct	s_data
 	int tmp_len;
 	int	count;
 	int max;
-};
+	int		texture_width;
+	int		texture_height;
+	struct s_imgdata	*imgdata;
+}	t_data;
 
 typedef struct s_map		t_map;
 

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 14:57:12 by jecolmou          #+#    #+#             */
-/*   Updated: 2022/12/14 15:36:33 by marvin           ###   ########.fr       */
+/*   Updated: 2022/12/14 17:04:52 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ int	main(int argc, char **argv)
 	// PUIS RECUPERER LES COULEURS DE CES INT RGB data->RGB[0] = atoi du premier nombre en question etc
 	// Il FAUT AUSSI RECUPERER LES PATHS DE NOS IMAGES DONC UN NOUVEAU TAB AVEC LES INFOS DU DEBUT DE MAP DONC 1ere LIGNE DU TABLEAU LE PATH DE NO DEUXIEME LIGNE LE PATH DE SO
 	// TROISIEME LIGNE WE ET QUATRIEME EA data->mappath par exemple
-	
+	new_window(data);
+	// INIT TOUTES LES VARIABLES NECESSAIRES AU JEU A 0 + DIRECTION
+	data.img = mlx_new_image(data.mlx_ptr, WIDTHSCREEN, HEIGHTSCREEN);
+	data.addr = (int *)mlx_get_data_addr(data.img,
+			&data.bits_per_pixel, &data.line_length, &data.endian);
 	return (0);
 }
