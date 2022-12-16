@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	ft_destroy_image(t_data *data, int j)
+void	ft_free_image(t_data *data, int j)
 {
 	int	i;
 
@@ -10,11 +10,11 @@ void	ft_destroy_image(t_data *data, int j)
 	mlx_destroy_image(data->mlx_ptr, data->img);
 }
 
-int	ft_destroy(t_data *data, int j)
+int	ft_free(t_data *data, int j)
 {
 	if (j == 4)
-		ft_destroy_image(data, j);
-	//FREE ALL MAP, MAP PATH, TMP SI IL Y A, DATA, PATH, IMGDATA
+		ft_free_image(data, j);
+	//FREE ALL MAP, MAP PATH, TMP SI IL Y A, DATA, PATH, IMGDATA strcut img data dans data
 	mlx_destroy_window(data->mlx_ptr, data->mlx_win);
 	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
@@ -50,8 +50,8 @@ void	get_img(t_data *data)
 			data->imgdata = img;
 			write(2, "error\n", 6);
 			while (--i >= 0)
-				mlx_destroy_image(win->mlx_ptr, win->print[i].image);
-			ft_destroy(win, i);
+				mlx_destroy_image(data->mlx_ptr, data->print[i].image);
+			ft_free(data, i);
 			exit(0);
 		}
 		img[i].addr = (int *)mlx_get_data_addr(img[i].image, &img[i].bpp,

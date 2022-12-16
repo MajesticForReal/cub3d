@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 14:49:46 by jecolmou          #+#    #+#             */
-/*   Updated: 2022/12/14 16:53:21 by marvin           ###   ########.fr       */
+/*   Updated: 2022/12/16 18:54:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ struct	s_data
 	int tmp_len;
 	int	count;
 	int max;
+	void			*mlx_ptr;
+	void			*mlx_win;
 	int		texture_width;
 	int		texture_height;
 	struct s_imgdata	*imgdata;
