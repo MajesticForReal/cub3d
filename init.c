@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/21 20:10:01 by anrechai          #+#    #+#             */
+/*   Updated: 2022/12/21 20:10:01 by anrechai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	init_data(t_data *data)
@@ -33,6 +45,9 @@ void	init_game(t_data *data)
 	data->deltadisty = 0;
 	data->perpwalldist = 0;
 	data->sidedistx = 0;
+	data->img = mlx_new_image(data->mlx_ptr, 2560, 1440);
+	data->addr = (int *)mlx_get_data_addr(data->img,
+			&data->bits_per_pixel, &data->size_line, &data->endian);
 	init_game2(data);
 }
 
@@ -79,10 +94,8 @@ void	init_game2(t_data *data)
 
 void	init_path_text(t_data *data)
 {
-	data->north_path = NULL;
-	data->south_path = NULL;
-	data->east_path = NULL;
-	data->west_path = NULL;
-	data->floor_info = NULL;
-	data->ceiling_info = NULL;
+	data->north = NULL;
+	data->south = NULL;
+	data->east = NULL;
+	data->west = NULL;
 }

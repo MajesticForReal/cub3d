@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jecolmou <jecolmou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 19:09:31 by anrechai          #+#    #+#             */
-/*   Updated: 2022/12/29 19:09:38 by anrechai         ###   ########.fr       */
+/*   Created: 2022/11/30 18:21:21 by jecolmou          #+#    #+#             */
+/*   Updated: 2022/11/30 18:22:12 by jecolmou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	ft_strlen(char *str)
+void	*ft_calloc(size_t count, size_t size)
 {
-	int	i;
+	void	*s;
+	int		i;
 
 	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	s = malloc(count * size);
+	if (s == NULL)
+		return (NULL);
+	ft_bzero(s, size * count);
+	return (s);
 }

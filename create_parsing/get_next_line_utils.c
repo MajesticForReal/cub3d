@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jecolmou <jecolmou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:38:17 by jecolmou          #+#    #+#             */
-/*   Updated: 2022/12/05 17:38:26 by jecolmou         ###   ########.fr       */
+/*   Updated: 2022/12/28 18:38:04 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ int	ft_is_a_line(char *str)
 
 	i = 0;
 	if (!str)
-	{
-	
 		return (0);
-	}
 	while (str[i] && str[i] != '\n')
 		i++;
 	if (str[i] == '\n')
@@ -72,10 +69,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	final = malloc(sizeof(char) * (ft_strlen_gnl(s1)
 				+ (ft_strlen_gnl(s2)) + 1));
 	if (!final)
-	{
-		dprintf(2, "RETURN FINAL STRJOIN\n");
 		return (free_join(final, i), NULL);
-	}
 	while (s1 && (char)s1[i])
 	{
 		final[i] = (char)s1[i];

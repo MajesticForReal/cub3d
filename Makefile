@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jeannecolmou <jeannecolmou@student.42.f    +#+  +:+       +#+         #
+#    By: jecolmou <jecolmou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/30 14:52:30 by jecolmou          #+#    #+#              #
-#    Updated: 2022/12/08 19:21:26 by jeannecolmo      ###   ########.fr        #
+#    Updated: 2022/12/28 16:41:05 by jecolmou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME					=	cub3d
 
-SRC					=		cub3d.c \
+SRCS					=		main.c \
 							utils/ft_strnstr.c \
 							utils/ft_strcmp.c \
 							utils/ft_bzero.c \
@@ -20,38 +20,47 @@ SRC					=		cub3d.c \
 							utils/ft_putstr_fd.c \
 							utils/ft_strlen.c \
 							utils/ft_strjoin.c \
-							get_next_line/get_next_line.c \
-							get_next_line/get_next_line_utils.c \
+							utils/ft_atoi.c \
+							utils/ft_calloc.c \
 							free.c \
-							parsing.c \
-							parsing_lines.c \
-							parsing_cases.c \
-							open_file.c \
+							create_parsing/parsing.c \
+							create_parsing/parsing_coord.c \
+							create_parsing/open_file.c \
+							create_parsing/fill_path_map.c \
+							create_parsing/get_next_line.c \
+							create_parsing/get_next_line_utils.c \
+							control_parsing/parsing_lines.c \
+							control_parsing/parsing_cases.c \
+							control_parsing/parsing_letters.c \
+							img.c \
+							init.c \
+							texture.c \
+							window.c \
+							movement.c \
 
-NAME = cub3d
+OBJS 		= ${SRCS:.c=.o}
 
-CC = clang
+CC 			= clang
+CFLAGS		= -Wall -Wextra -Werror -g3
+RM			= rm -f
+NAME		= cub3d
+FLAGS		= -lXext -lX11 -lm ./mlx/libmlx.a ./mlx/libmlx_Linux.a
 
-LINK = clang
+all: 		${NAME}
 
-CFLAGS = -Wall -Wextra -Werror -I. -c -g3
+.c.o:
+			${CC} ${CFLAGS} -Imlx -c $< -o ${<:.c=.o}
 
-OBJ = $(SRC:.c=.o)
+$(NAME): 	./mlx/libmlx.a  $(OBJS)
+			${CC} $(CFLAGS) -o $(NAME) $(OBJS) $(FLAGS)
 
-all: $(NAME)
-
-$(NAME): $(OBJ) $(MLX)
-	$(LINK) $(OBJ) $(LFLAGS) $(OUTPUT_OPTION)
-
-%.o: %.c
-	${CC} ${CFLAGS} $< $(OUTPUT_OPTION)
+./mlx/libmlx.a :
+	make -s -C ./mlx
 
 clean:
-	rm -f $(OBJ)
+			${RM} ${OBJS}
 
-fclean: clean
-	rm -f $(NAME)
+fclean: 	clean
+			${RM} ${NAME}
 
-re: fclean all
-
-.PHONY: clean fclean re
+re: 		fclean all

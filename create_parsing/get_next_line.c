@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jecolmou <jecolmou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:36:31 by jecolmou          #+#    #+#             */
-/*   Updated: 2022/12/05 17:19:37 by jecolmou         ###   ########.fr       */
+/*   Updated: 2022/12/29 18:59:26 by anrechai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+char	**ft_rgb_map(char **map, t_data *x, char *str)
+{
+	str = malloc(sizeof(char) * (x->countrgb + 1));
+	map = move_map(map, x);
+	while ((map[x->o][x->f] >= 48 && map[x->o][x->f] <= 57)
+		|| map[x->o][x->f] == ',')
+	{
+		str[x->index] = map[x->o][x->f];
+		x->index++;
+		x->f++;
+		if (x->index == x->countrgb)
+		{
+			str[x->index] = '\0';
+			x->rgb[x->j] = ft_atoi(str);
+			x->j++;
+			x->f++;
+			x->index = 0;
+			x->countrgb = ft_sizeofnumber(map, x->o, x->f);
+			free(str);
+			str = malloc(sizeof(char) * (x->countrgb + 1));
+		}
+	}
+	free(str);
+	return (map);
+}
 
 char	*ft_read_text(int fd, char *final)
 {
@@ -20,10 +46,7 @@ char	*ft_read_text(int fd, char *final)
 
 	buf = malloc(sizeof(char) * 2);
 	if (!buf)
-	{
-		dprintf(2, "RETURN !BUF\n");
 		return (free(final), NULL);
-	}
 	var_read = 1;
 	while (ft_is_a_line(final) == 0 && var_read > 0)
 	{
@@ -33,19 +56,13 @@ char	*ft_read_text(int fd, char *final)
 			buf[var_read] = '\0';
 			tmp = ft_strjoin_gnl(final, buf);
 			if (tmp == NULL)
-			{
-				dprintf(2, "RETURN TMP == NULL\n");
 				return (free(final), free(buf), NULL);
-			}
 			final = tmp;
 		}
 	}
 	free(buf);
 	if (var_read == -1)
-	{
-		dprintf(2, "VAR READ == -1\n");
 		return (NULL);
-	}
 	return (final);
 }
 
@@ -56,18 +73,12 @@ char	*ft_extract_line(char *s1)
 
 	i = 0;
 	if (!s1[i])
-	{
-		dprintf(2, "PAS DE 1i DANS EXTRACT\n");
 		return (0);
-	}
 	while (s1[i] && s1[i] != '\n')
 		i++;
 	new_line = malloc(sizeof(char) * (i + 2));
 	if (!new_line)
-	{
-		dprintf(2, "PAS DE NEW_LINE DANS EXTRACT LINE\n");
 		return (NULL);
-	}
 	ft_bzero(new_line, i + 2);
 	i = 0;
 	while (s1[i] && (s1[i] != '\n'))
@@ -95,7 +106,6 @@ char	*ft_save_line(char *str)
 	if (!str[i])
 	{
 		free(str);
-		dprintf(2, "PAS DE STR[i] DANS SAVE LINE\n");
 		return (0);
 	}
 	final = malloc(sizeof(char) * (ft_strlen_gnl(str) - i + 1));
@@ -113,16 +123,6 @@ char	*ft_save_line(char *str)
 	return (final);
 }
 
-/**
- * Get the next line object
- *
- *
- * @param reset	used for free the static variable
- * 				0 is for not free the static
- * 				1 is for free the static
- *  @return char*
- */
-
 char	*get_next_line(int fd, int reset)
 {
 	char		*line;
@@ -137,10 +137,7 @@ char	*get_next_line(int fd, int reset)
 		return (NULL);
 	line = ft_extract_line(buf);
 	if (!line)
-	{
-		dprintf(2, "PAS DE LINE DANS GNL !LINE\n");
 		return (NULL);
-	}
 	buf = ft_save_line(buf);
 	return (line);
 }

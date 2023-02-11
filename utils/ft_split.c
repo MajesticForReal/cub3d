@@ -6,7 +6,7 @@
 /*   By: jecolmou <jecolmou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:32:50 by jecolmou          #+#    #+#             */
-/*   Updated: 2022/12/10 15:09:05 by jecolmou         ###   ########.fr       */
+/*   Updated: 2022/12/20 22:18:51 by jecolmou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,30 +46,55 @@ char	**free_split(char **str, int count)
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c, t_data *x)
+void	ft_split_n_error(t_data *x, char **tab, int i, char *s)
+{
+	if (s[x->v] == '\n' && s[x->v + 1] == '\n')
+	{
+		x->count_n++;
+		if (x->count_n > 2)
+		{
+			ft_putstr_fd("Error : Map is not good\n", 2);
+			free_split(tab, i);
+			free(s);
+			exit (0);
+		}
+	}
+}
+
+void	ft_loop_split(char **tab, char *s, char c, t_data *x)
+{
+	while (++x->y < ft_count_word(s, c))
+	{
+		x->z = 0;
+		tab[x->y] = malloc((x->len) * sizeof(char));
+		if (tab[x->y] == NULL)
+			free_split(tab, x->y);
+		while (s[x->v] == c && s[x->v])
+		{
+			ft_split_n_error(x, tab, x->y, s);
+			x->v++;
+		}
+		while (s[x->v] != c && s[x->v])
+			tab[x->y][x->z++] = s[x->v++];
+		while (x->z < x->len - 1)
+		{
+			tab[x->y][x->z] = ' ';
+			x->z++;
+		}
+		tab[x->y][x->z] = '\0';
+	}
+}
+
+char	**ft_split(char *s, char c, t_data *x)
 {
 	char	**tab;
-	int		i;
-	int		j;
-	int		k;
 
-	i = -1;
-	k = 0;
+	x->y = -1;
+	x->v = 0;
 	tab = malloc((ft_count_word(s, c) + 1) * sizeof(char *));
 	if (!tab || !s)
 		return (NULL);
-	while (++i < ft_count_word(s, c))
-	{
-		j = 0;
-		tab[i] = malloc((x->len + 1) * sizeof(char));
-		if (tab[i] == NULL)
-			free_split(tab, i);
-		while (s[k] == c && s[k])
-			k++;
-		while (s[k] != c && s[k])
-			tab[i][j++] = s[k++];
-		tab[i][j] = '\0';
-	}
-	tab[i] = NULL;
+	ft_loop_split(tab, s, c, x);
+	tab[x->y] = NULL;
 	return (tab);
 }

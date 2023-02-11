@@ -1,5 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrechai <anrechai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/29 19:09:45 by anrechai          #+#    #+#             */
+/*   Updated: 2022/12/29 19:09:47 by anrechai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
+
+char	*free_join_bb(char *str, int count)
+{
+	while (count >= 0)
+	{
+		free(str);
+		count--;
+	}
+	free(str);
+	return (0);
+}
 
 char	*ft_strjoin(char *s1, char *s2)
 {
@@ -7,25 +29,23 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		j;
 	char	*final;
 
-	i = -1;
+	i = 0;
 	j = 0;
-	if (!s1)
+	final = malloc(sizeof(char) * (ft_strlen_gnl(s1)
+				+ (ft_strlen_gnl(s2)) + 1));
+	if (!final)
+		return (free_join_bb(final, i), NULL);
+	while (s1 && (char)s1[i])
 	{
-		s1 = (char *)malloc(1 * sizeof(char));
-		s1[0] = '\0';
-	}
-	if (!s1 || !s2)
-		return (NULL);
-	final = malloc(sizeof(char) * ((ft_strlen(s1) + (ft_strlen(s2))) + 1));
-	if (final == NULL)
-		return (NULL);
-	while (s1[++i])
-		final[i] = s1[i];
-	while (s2[j])
-	{
-		final[i] = s2[j];
-		j++;
+		final[i] = (char)s1[i];
 		i++;
+	}
+	free(s1);
+	while ((char)s2[j])
+	{
+		final[i] = (char)s2[j];
+		i++;
+		j++;
 	}
 	final[i] = '\0';
 	return (final);
